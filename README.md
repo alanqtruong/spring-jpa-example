@@ -1,6 +1,6 @@
 # Spring Boot JPA Example
 
-Example using spring boot, JPA repository, hibernate transaction, Spring RestController and tomcat application server
+Example using spring boot, JPA repository, hibernate transaction, Spring RestController, HyperSQL embedded database and tomcat application server
 
 ## Getting Started
 
