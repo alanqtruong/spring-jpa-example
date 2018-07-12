@@ -10,7 +10,7 @@ import com.example.spring.jpa.models.UserMessage;
 import com.example.spring.jpa.repositories.UserMessageRepository;
 
 /**
- *  @author recklessN1nja
+ *  @author alanqtruong
  */
 @Service("messageService")
 @Transactional

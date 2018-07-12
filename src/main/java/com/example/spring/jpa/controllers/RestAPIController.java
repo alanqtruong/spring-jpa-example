@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 /**
- *  @author recklessN1nja
+ *  @author alanqtruong
  */
 @RestController
 @RequestMapping("/api")

@@ -23,7 +23,7 @@ import javax.sql.DataSource;
 
 /**
  * Setup embedded database, jpa repository and transaction manager
- *  @author recklessN1nja
+ *  @author alanqtruong
  */
 @Configuration
 @EnableJpaRepositories(basePackages = "com.example.spring.jpa",

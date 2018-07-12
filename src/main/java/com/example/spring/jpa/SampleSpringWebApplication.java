@@ -6,7 +6,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 
 /**
- *  @author recklessN1nja
+ *  @author alanqtruong
  */
 @SpringBootApplication(scanBasePackages = "com.example.spring.jpa")
 public class SampleSpringWebApplication extends SpringBootServletInitializer {

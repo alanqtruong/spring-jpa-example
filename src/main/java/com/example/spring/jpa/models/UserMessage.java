@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 /**
- *  @author recklessN1nja
+ *  @author alanqtruong
  */
 @Entity
 @Table(name="USER_MESSAGES")
