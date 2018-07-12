@@ -26,7 +26,7 @@ import javax.sql.DataSource;
  *  @author recklessN1nja
  */
 @Configuration
-@EnableJpaRepositories(basePackages = "com.alan.spring.repositories",
+@EnableJpaRepositories(basePackages = "com.example.spring.jpa",
 		entityManagerFactoryRef = "entityManagerFactory",
 		transactionManagerRef = "transactionManager")
 @EnableTransactionManagement
