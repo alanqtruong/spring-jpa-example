@@ -7,14 +7,14 @@ Example using spring boot, JPA repository, hibernate transaction, Spring RestCon
 * build using mvn clean install -U
 * deploy war using tomcat
 
-### APIs
-* Retrieve all message (GET)
+### REST Services
+* Retrieve all messages (GET)
     * http://localhost:8080/spring-jpa-example/api/message
     
 * Retrieve message by id (GET)
     * http://localhost:8080/spring-jpa-example/api/message/1
     
-* Create message (PUT)
+* Create new message (PUT)
     * http://localhost:8080/spring-jpa-example/api/message/
         * body: {"id":3,"user_message":"test message"}
         
