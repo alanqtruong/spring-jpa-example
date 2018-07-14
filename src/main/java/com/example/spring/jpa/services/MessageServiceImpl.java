@@ -25,7 +25,7 @@ public class MessageServiceImpl implements MessageService{
 	}
 
 	@Override
-	public UserMessage findById(Long id) {
+	public UserMessage findById(long id) {
 		return userMessageRepository.findOne(id);
 	}
 
@@ -40,8 +40,13 @@ public class MessageServiceImpl implements MessageService{
 	}
 
 	@Override
-	public void deleteMessageById(Long id){
+	public void deleteMessageById(long id){
 		userMessageRepository.delete(id);
+	}
+
+	@Override
+	public boolean isPresent(long id) {
+		return userMessageRepository.exists(id);
 	}
 
 }

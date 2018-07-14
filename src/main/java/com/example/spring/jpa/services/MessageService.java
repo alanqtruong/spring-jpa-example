@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface MessageService {
 
-	UserMessage findById(Long id);
+	UserMessage findById(long id);
 
 	List<UserMessage> findAllMessages();
 
@@ -14,6 +14,8 @@ public interface MessageService {
 
 	void updateMessage(UserMessage userMessage);
 
-	void deleteMessageById(Long id);
+	void deleteMessageById(long id);
+
+	boolean isPresent(long id);
 
 }

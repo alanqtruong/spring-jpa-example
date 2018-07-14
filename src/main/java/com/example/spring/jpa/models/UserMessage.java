@@ -1,5 +1,6 @@
 package com.example.spring.jpa.models;
 
+import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
@@ -14,26 +15,27 @@ public class UserMessage implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
-	private Long id;
+	private long id;
 
 	@NotEmpty
-	@Column(name="USER_MESSAGE", nullable=false)
-	private String user_message;
+	@Column(name="message", nullable=false)
+	@NotBlank(message = "Message cannot be blank")
+	private String message;
 
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
-	public String getUser_message() {
-		return user_message;
+	public String getMessage() {
+		return message;
 	}
 
-	public void setUser_message(String user_message) {
-		this.user_message = user_message;
+	public void setMessage(String message) {
+		this.message = message;
 	}
 
 
