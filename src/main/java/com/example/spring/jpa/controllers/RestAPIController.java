@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.Errors;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -18,6 +18,7 @@ import java.util.List;
  *  @author alanqtruong
  */
 @RestController
+@Validated
 @RequestMapping("/api")
 public class RestAPIController {
 
@@ -46,18 +47,16 @@ public class RestAPIController {
 
 	//create message
 	@PostMapping(value = "/message")
-	public ResponseEntity<String> createMessage(@Valid @RequestBody UserMessage userMessage, Errors errors) {
+	public ResponseEntity<String> createMessage(@Valid @RequestBody UserMessage userMessage) {
 		logger.info("Creating message {}", userMessage);
-		if(errors.hasErrors()) throw new UserMessageException(errors, HttpStatus.BAD_REQUEST);
 		messageService.saveMessage(userMessage);
 		return new ResponseEntity<>("Successfully created message", HttpStatus.CREATED);
 	}
 
 	//update existing message
 	@PutMapping(value = "/message/{id}")
-	public ResponseEntity<UserMessage> updateMessage(@PathVariable("id") long id, @Valid @RequestBody UserMessage userMessage, Errors errors) {
+	public ResponseEntity<UserMessage> updateMessage(@PathVariable("id") long id, @Valid @RequestBody UserMessage userMessage) {
 		logger.info("Updating message with id {}", id);
-		if(errors.hasErrors()) throw new UserMessageException(errors, HttpStatus.BAD_REQUEST);
 		UserMessage currentMessage = messageService.findById(id);
 		if (currentMessage == null) throw new UserMessageException("Unable to update message with id " + id + " not found.", HttpStatus.NOT_FOUND);
 		currentMessage.setMessage(userMessage.getMessage());
