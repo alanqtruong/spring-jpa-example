@@ -1,6 +1,6 @@
 package com.example.spring.jpa.controllers;
 
-import com.example.spring.jpa.models.UserMessageError;
+import com.example.spring.jpa.models.UserResponseMessage;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,8 +20,8 @@ public class BaseController {
 	 * @return generic page not found message
 	 */
 	@RequestMapping("**")
-	public ResponseEntity<UserMessageError> catchAll() {
-		return new ResponseEntity<>(new UserMessageError("Page not found", new Date()), HttpStatus.NOT_FOUND);
+	public ResponseEntity<UserResponseMessage> catchAll() {
+		return new ResponseEntity<>(new UserResponseMessage("Page not found", new Date()), HttpStatus.NOT_FOUND);
 	}
 
 }

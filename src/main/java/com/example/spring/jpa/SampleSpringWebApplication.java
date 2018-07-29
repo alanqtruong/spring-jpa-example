@@ -2,22 +2,14 @@ package com.example.spring.jpa;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.web.support.SpringBootServletInitializer;
 
 /**
  *  @author alanqtruong
  */
 @SpringBootApplication(scanBasePackages = "com.example.spring.jpa")
-public class SampleSpringWebApplication extends SpringBootServletInitializer {
+public class SampleSpringWebApplication {
 
-	@Override
-	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-		return application.sources(SampleSpringWebApplication.class);
-	}
-
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) {
 		SpringApplication.run(SampleSpringWebApplication.class, args);
 	}
-
 }

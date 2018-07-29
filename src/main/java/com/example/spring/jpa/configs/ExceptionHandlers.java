@@ -1,7 +1,7 @@
 package com.example.spring.jpa.configs;
 
 import com.example.spring.jpa.exceptions.UserMessageException;
-import com.example.spring.jpa.models.UserMessageError;
+import com.example.spring.jpa.models.UserResponseMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
@@ -27,38 +27,38 @@ public class ExceptionHandlers {
     private static final Logger logger = LoggerFactory.getLogger(ExceptionHandlers.class);
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public final ResponseEntity<UserMessageError> handlMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
+    public final ResponseEntity<UserResponseMessage> handlMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
         logger.error("Exception {}", ex);
-        return new ResponseEntity<>(new UserMessageError(ex.getBindingResult().getFieldErrors()
+        return new ResponseEntity<>(new UserResponseMessage(ex.getBindingResult().getFieldErrors()
                 .stream()
                 .map(DefaultMessageSourceResolvable::getDefaultMessage)
                 .collect(Collectors.joining(". ")), new Date()), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(ConstraintViolationException.class)
-    public final ResponseEntity<UserMessageError> handleConstraintViolationException(ConstraintViolationException ex) {
+    public final ResponseEntity<UserResponseMessage> handleConstraintViolationException(ConstraintViolationException ex) {
         logger.error("Exception {}", ex);
-        return new ResponseEntity<>(new UserMessageError(ex.getConstraintViolations()
+        return new ResponseEntity<>(new UserResponseMessage(ex.getConstraintViolations()
                 .stream()
                 .map(ConstraintViolation::getMessage)
                 .collect(Collectors.joining(". ")), new Date()), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(UserMessageException.class)
-    public final ResponseEntity<UserMessageError> handleUserNotFoundException(UserMessageException ex) {
+    public final ResponseEntity<UserResponseMessage> handleUserNotFoundException(UserMessageException ex) {
         logger.error("Exception {}", ex);
-        return new ResponseEntity<>(new UserMessageError(ex.getMessage(), new Date()), ex.getHttpStatus());
+        return new ResponseEntity<>(new UserResponseMessage(ex.getMessage(), new Date()), ex.getHttpStatus());
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
-    public final ResponseEntity<UserMessageError> handlHttpMessageNotReadableExceptione(HttpMessageNotReadableException ex) {
+    public final ResponseEntity<UserResponseMessage> handlHttpMessageNotReadableExceptione(HttpMessageNotReadableException ex) {
         logger.error("Exception {}", ex);
-        return new ResponseEntity<>(new UserMessageError("Bad JSON Request", new Date()), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new UserResponseMessage("Bad JSON Request", new Date()), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(Exception.class)
-    public final ResponseEntity<UserMessageError> handleAllExceptions(Exception ex) {
+    public final ResponseEntity<UserResponseMessage> handleAllExceptions(Exception ex) {
         logger.error("Exception {}", ex);
-        return new ResponseEntity<>(new UserMessageError("An error has occurred. Please try again later", new Date()), HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(new UserResponseMessage("An error has occurred. Please try again later", new Date()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

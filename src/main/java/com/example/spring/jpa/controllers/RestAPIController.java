@@ -2,6 +2,7 @@ package com.example.spring.jpa.controllers;
 
 import com.example.spring.jpa.exceptions.UserMessageException;
 import com.example.spring.jpa.models.UserMessage;
+import com.example.spring.jpa.models.UserResponseMessage;
 import com.example.spring.jpa.services.MessageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +13,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -40,17 +42,17 @@ public class RestAPIController {
 	@GetMapping(value = "/message/{id}")
 	public ResponseEntity<UserMessage> getMessage(@PathVariable("id") long id) {
 		logger.info("Fetching message with id {}", id);
-		UserMessage meesage = messageService.findById(id);
-		if (meesage == null) throw new UserMessageException("message with id " + id + " not found", HttpStatus.NOT_FOUND);
-		return new ResponseEntity<>(meesage, HttpStatus.OK);
+		UserMessage message = messageService.findById(id);
+		if (message == null) throw new UserMessageException("message with id " + id + " not found", HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(message, HttpStatus.OK);
 	}
 
 	//create message
 	@PostMapping(value = "/message")
-	public ResponseEntity<String> createMessage(@Valid @RequestBody UserMessage userMessage) {
+	public ResponseEntity<UserResponseMessage> createMessage(@Valid @RequestBody UserMessage userMessage) {
 		logger.info("Creating message {}", userMessage);
 		messageService.saveMessage(userMessage);
-		return new ResponseEntity<>("Successfully created message", HttpStatus.CREATED);
+		return new ResponseEntity<>(new UserResponseMessage("Successfully created message", new Date()), HttpStatus.CREATED);
 	}
 
 	//update existing message
