@@ -12,7 +12,7 @@ public interface MessageService {
 
 	void saveMessage(UserMessage userMessage);
 
-	void updateMessage(UserMessage userMessage);
+	void updateMessage(long id, UserMessage userMessage);
 
 	void deleteMessageById(long id);
 

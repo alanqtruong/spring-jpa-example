@@ -1,5 +1,8 @@
 package com.example.spring.jpa.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -24,6 +27,7 @@ public class UserResponseMessage implements Serializable {
         this.message = message;
     }
 
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd'T'HH:mm:ss'Z'")
     public Date getDate() {
         return date;
     }

@@ -1,6 +1,5 @@
 package com.example.spring.jpa.controllers;
 
-import com.example.spring.jpa.exceptions.UserMessageException;
 import com.example.spring.jpa.models.UserMessage;
 import com.example.spring.jpa.models.UserResponseMessage;
 import com.example.spring.jpa.services.MessageService;
@@ -34,17 +33,14 @@ public class RestAPIController {
 	public ResponseEntity<List<UserMessage>> listAllMessages() {
 		logger.info("fetching all messages");
 		List<UserMessage> messages = messageService.findAllMessages();
-		if (messages.isEmpty()) return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-		return new ResponseEntity<>(messages, HttpStatus.OK);
+		return messages.isEmpty() ? new ResponseEntity<>(HttpStatus.NO_CONTENT) : new ResponseEntity<>(messages, HttpStatus.OK);
 	}
 
 	//returns the message for a given id
 	@GetMapping(value = "/message/{id}")
 	public ResponseEntity<UserMessage> getMessage(@PathVariable("id") long id) {
 		logger.info("Fetching message with id {}", id);
-		UserMessage message = messageService.findById(id);
-		if (message == null) throw new UserMessageException("message with id " + id + " not found", HttpStatus.NOT_FOUND);
-		return new ResponseEntity<>(message, HttpStatus.OK);
+		return new ResponseEntity<>(messageService.findById(id), HttpStatus.OK);
 	}
 
 	//create message
@@ -57,20 +53,16 @@ public class RestAPIController {
 
 	//update existing message
 	@PutMapping(value = "/message/{id}")
-	public ResponseEntity<UserMessage> updateMessage(@PathVariable("id") long id, @Valid @RequestBody UserMessage userMessage) {
+	public ResponseEntity<UserResponseMessage> updateMessage(@PathVariable("id") long id, @Valid @RequestBody UserMessage userMessage) {
 		logger.info("Updating message with id {}", id);
-		UserMessage currentMessage = messageService.findById(id);
-		if (currentMessage == null) throw new UserMessageException("Unable to update message with id " + id + " not found.", HttpStatus.NOT_FOUND);
-		currentMessage.setMessage(userMessage.getMessage());
-		messageService.updateMessage(currentMessage);
-		return new ResponseEntity<>(currentMessage, HttpStatus.OK);
+		messageService.updateMessage(id, userMessage);
+		return new ResponseEntity<>(new UserResponseMessage("Successfully updated message", new Date()), HttpStatus.OK);
 	}
 
 	// delete message
 	@DeleteMapping(value = "/message/{id}")
-	public ResponseEntity<Object> deleteMessage(@PathVariable("id") long id) {
+	public ResponseEntity<?> deleteMessage(@PathVariable("id") long id) {
 		logger.info("Deleting message with id {}", id);
-		if (!messageService.isPresent(id)) throw new UserMessageException("Unable to delete message with id " + id + " not found.", HttpStatus.NOT_FOUND);
 		messageService.deleteMessageById(id);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
