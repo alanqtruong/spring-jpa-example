@@ -3,10 +3,11 @@ package com.example.spring.jpa.services;
 import com.example.spring.jpa.models.UserMessage;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface MessageService {
 
-	UserMessage findById(long id);
+	Optional<UserMessage> findById(long id);
 
 	List<UserMessage> findAllMessages();
 

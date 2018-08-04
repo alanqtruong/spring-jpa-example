@@ -1,6 +1,7 @@
 package com.example.spring.jpa.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.example.spring.jpa.exceptions.UserMessageException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,9 +28,9 @@ public class MessageServiceImpl implements MessageService{
 	}
 
 	@Override
-	public UserMessage findById(long id) {
-		UserMessage message =  userMessageRepository.findOne(id);
-		if (message == null) throw new UserMessageException("message with id " + id + " not found", HttpStatus.NOT_FOUND);
+	public Optional<UserMessage> findById(long id) {
+		Optional<UserMessage> message =  userMessageRepository.findById(id);
+		if (!message.isPresent()) throw new UserMessageException("message with id " + id + " not found", HttpStatus.NOT_FOUND);
 		return message;
 	}
 
@@ -42,21 +43,20 @@ public class MessageServiceImpl implements MessageService{
 	@Override
 	public void updateMessage(long id, UserMessage userMessage){
 		userMessage.setId(id);
-		UserMessage currentMessage = findById(id);
-		if (currentMessage == null) throw new UserMessageException("Unable to update message with id " + id + " not found.", HttpStatus.NOT_FOUND);
-		currentMessage.setMessage(userMessage.getMessage());
-		userMessageRepository.save(currentMessage);
+		Optional<UserMessage> currentMessage = userMessageRepository.findById(id);
+		if (!currentMessage.isPresent()) throw new UserMessageException("Unable to update message with id " + id + " not found.", HttpStatus.NOT_FOUND);
+		userMessageRepository.save(userMessage);
 	}
 
 	@Override
 	public void deleteMessageById(long id){
 		if (!isPresent(id)) throw new UserMessageException("Unable to delete message with id " + id + " not found.", HttpStatus.NOT_FOUND);
-		userMessageRepository.delete(id);
+		userMessageRepository.deleteById(id);
 	}
 
 	@Override
 	public boolean isPresent(long id) {
-		return userMessageRepository.exists(id);
+		return userMessageRepository.existsById(id);
 	}
 
 }

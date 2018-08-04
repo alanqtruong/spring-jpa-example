@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 /**
  *  @author alanqtruong
@@ -38,7 +39,7 @@ public class RestAPIController {
 
 	//returns the message for a given id
 	@GetMapping(value = "/message/{id}")
-	public ResponseEntity<UserMessage> getMessage(@PathVariable("id") long id) {
+	public ResponseEntity<Optional<UserMessage>> getMessage(@PathVariable("id") long id) {
 		logger.info("Fetching message with id {}", id);
 		return new ResponseEntity<>(messageService.findById(id), HttpStatus.OK);
 	}
@@ -61,7 +62,7 @@ public class RestAPIController {
 
 	// delete message
 	@DeleteMapping(value = "/message/{id}")
-	public ResponseEntity<?> deleteMessage(@PathVariable("id") long id) {
+	public ResponseEntity<Object> deleteMessage(@PathVariable("id") long id) {
 		logger.info("Deleting message with id {}", id);
 		messageService.deleteMessageById(id);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
